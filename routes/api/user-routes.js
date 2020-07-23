@@ -5,7 +5,10 @@ const { User } = require('../../models');
 router.get('/', (req, res) => {
     // Access our User model and run .findAll(),  a sequelize model class method.
     // it is the JS equivalent of SELECT * FROM users; SQL query.
-    User.findAll()
+    User.findAll({
+        // this wont return users passwords.
+        attributes: { exclude: ['password'] }
+    })
     .then(dbUserData => res.json(dbUserData))
     .catch(err => {
         console.log(err);
@@ -16,6 +19,7 @@ router.get('/', (req, res) => {
 // GET /api/users/1
 router.get('/:id', (req, res) => {
     User.findOne({
+        attributes: { exclude: ['password'] },
         where: {
             id: req.params.id
         }
