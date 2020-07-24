@@ -52,6 +52,35 @@ router.post('/', (req, res) => {
     });
 });
 
+// login route
+// a get method could be used here but it is far less secure than a POST method 
+// because the request parameter wont be displayed in the URL for POST but will in GET
+router.post('/login', (req, res) => {
+    // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+        // if not found
+    }).then(dbUserData => {
+        if (!dbUserData) {
+            res.status(400).json({ message: 'No user with that email address!' });
+            return;
+        }        
+
+        // verify user
+        // checkPaswword will return a true or false value. And \/ contains the plaintext password.
+        const validPassword = dbUserData.checkPassword(req.body.password);
+        // if incorrect password
+        if (!validPassword) {
+            res.status(400).json({ message: "Incorrect password!" });
+            return;
+        }
+        // if correct password
+        res.json({ user: dbUserData, message: "You are now logged in!" });
+    });
+});
+
 // PUT /api/users/1
 router.put('/:id', (req, res) => {
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}

@@ -5,7 +5,12 @@ const bcrypt = require('bcrypt');
 
 // create our User model. Model class and Datatype objects are imported from sequelize.
 // we create our own models from the model class using extend.
-class User extends Model {}
+class User extends Model {
+    // set up method to run on instance data (per user) to check password
+    checkPassword(loginPw) {
+        return bcrypt.compareSync(loginPw, this.password);
+    }
+}
 
 // define table columns and configuration
 // once User is defined we use init() to initializa the model's data & configuration, passing in two ogjects as arguements.
