@@ -1,5 +1,6 @@
 const User = require('./User')
 const Post = require('./Post')
+const Vote = require('./Vote')
 
 // create associations
 // this association creates a reference for the id column in the User model to link to the corresponding 
@@ -14,7 +15,41 @@ Post.belongsTo(User, {
     foreignKey: 'user_id',
 });
 
+// these are many-to-many associations. These allow Post and User to query eachother in the context of a vote.
+// i.e. we can see which users voted on a single post, or which posts a user voted on.
+
+User.belongsToMany(Post, {
+    through: Vote,
+    as: 'voted_posts',
+    foreignKey: 'user_id'
+});
+
+Post.belongsToMany(User, {
+    through: Vote,
+    as: 'voted_posts',
+    foreignKey: 'post_id'
+});
+
+// these one-to-many associations let us perform aggregated SQL functions between models.
+
+Vote.belongsTo(User, {
+    foreignKey: 'user_id'
+});
+
+Vote.belongsTo(Post, {
+    foreignKey: 'post_id'
+});
+
+User.hasMany(Vote, {
+    foreignKey: 'user_id'
+});
+
+Post.hasMany(Vote, {
+    foreignKey: 'post_id'
+});
+
 module.exports = {
     User,
-    Post
+    Post,
+    Vote
 };
