@@ -31,7 +31,7 @@ Vote.init(
         sequelize,
         timestamps: false,
         freezeTableName: true,
-        modelName: 'Vote'
+        modelName: 'vote'
     }
 );
 
