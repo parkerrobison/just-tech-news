@@ -1,5 +1,6 @@
 const router = require('express').Router();
-// we require User becasue Post contains an association to it with the foreign key user_id. 
+
+// we require User because Post contains an association to it with the foreign key user_id. 
 // This can form a JOIN.
 const {
     Post,

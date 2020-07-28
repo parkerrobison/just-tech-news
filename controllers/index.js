@@ -2,6 +2,11 @@ const router = require('express').Router();
 
 const apiRoutes = require('./api');
 
+// this file will contain all of the user-facing routes (homepage, login, etc)
+const homeRoutes = require('./home-routes')
+
+router.use('/', homeRoutes);
+
 router.use('/api', apiRoutes);
 
 // this is a RESTful practice that will throw a 404 error if we make a request to any endpoint that doesn't exist yet.
