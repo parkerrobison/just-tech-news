@@ -18,6 +18,7 @@ const { Post, User, Comment } = require('../models');
 //   });
 
 router.get('/', (req, res) => {
+    console.log(req.session);
     Post.findAll({
         attributes: [
             'id',
@@ -43,7 +44,7 @@ router.get('/', (req, res) => {
     })
     .then(dbPostData => {
         //pass a single post object into the hompage template
-        console.log(dbPostData[0])
+        // console.log(dbPostData[0])
         const posts = dbPostData.map(post => post.get({ plain: true }));
         // this is a serialized method to get only the information that you need.
         // res.json does this automatically, and that is why you never used serialization before.
@@ -53,6 +54,15 @@ router.get('/', (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
+});
+
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+
+    res.render('login');
 });
 
 module.exports = router;
