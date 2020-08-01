@@ -1,4 +1,5 @@
 const {format_date, format_plural} = require('../utils/helpers');
+
 test('format_date() returns a date string', () => {
     const date = new Date('2020-03-20 16:12:03');
   
@@ -6,13 +7,11 @@ test('format_date() returns a date string', () => {
   });
 
   test('format_plural() returns a pluralized word', ()=> {
-        const word1 = format_plural('lion', 1)
-        const word2 = format_plural('tiger', 2)
+    const word1 = format_plural('lion', 1)
+    const word2 = format_plural('tiger', 2)
 
-        expect(format_plural(word1)).toBe('lion');
-        expect(format_plural(word2)).toBe('tigers');
-        
-      
+    expect(format_plural(word1)).toBe('lion');
+    expect(format_plural(word2)).toBe('tigers');
   })
 
   test('format_url() returns a simplified url string', () => {
